@@ -81,3 +81,23 @@ h1 {
     padding: 10px;
     margin-top: 20px;
 }
+
+.item {
+    transition: background-color 0.3s ease;
+}
+
+.winner {
+    background-color: #28a745 !important;
+}
+
+
+@media (max-width: 400px) {
+    .area {
+        width: 90vw;
+    }
+    .area .item {
+        height: 90px;
+        font-size: 50px;
+    }
+}
+
