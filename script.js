@@ -12,8 +12,19 @@ reset();
 
 //Eventos
 document.querySelector('.reset').addEventListener('click', reset);
+document.querySelectorAll('.item').forEach(item => {
+    item.addEventListener('click', itemClick);
+});
 
 //Funções
+function itemClick(event) {
+    let item = event.target.getAttribute(`data-item`);
+    if (grid[item] === '') {
+        grid[item] = player
+        renderGrid();
+        togglePlayer();
+    }
+}
 
 function reset() {
     message = '';
@@ -41,5 +52,10 @@ function renderGrid() {
 function renderInfo() {
     document.querySelector('.vez').innerHTML = player;
     document.querySelector('.resultado').innerHTML = message;
+}
+
+function togglePlayer() {
+    player = (player === 'x') ? 'o' : 'x';
+    renderInfo();
 }
 
