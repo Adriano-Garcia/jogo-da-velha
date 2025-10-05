@@ -19,7 +19,7 @@ document.querySelectorAll('.item').forEach(item => {
 //Funções
 function itemClick(event) {
     let item = event.target.getAttribute(`data-item`);
-    if (grid[item] === '') {
+    if (playing && grid[item] === '') {
         grid[item] = player
         renderGrid();
         togglePlayer();
@@ -47,6 +47,7 @@ function renderGrid() {
         let item = document.querySelector(`div[data-item=${i}]`);
         item.innerHTML = grid[i];
     }
+    chechGame();
 }
 
 function renderInfo() {
@@ -59,3 +60,49 @@ function togglePlayer() {
     renderInfo();
 }
 
+function chechGame() {
+    if (checkWinnerFor('x')) {
+        message = 'Fim de jogo, "x" venceu';
+        playing = false;
+    } else if (checkWinnerFor('o')) {
+        message = 'Fim de jogo, "o" venceu';
+        playing = false;
+    } else if (isFull()) {
+        message = 'Deu empate';
+        playing = false;
+    }
+}
+
+function checkWinnerFor(player) {
+    let pos = [
+        'a1,a2,a3',
+        'b1,b2,b3',
+        'c1,c2,c3',
+
+        'a1,b1,c1',
+        'a2,b2,c2',
+        'a3,b3,c3',
+
+        'a1,b2,c3',
+        'a3,b2,c1'
+    ]
+
+    for (let w in pos) {
+        let pArray = pos[w].split(','); //ex: a1, a2, a3
+        let hasWon = pArray.every(option => grid[option] === player);
+        if (hasWon) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isFull() {
+    for (let i in grid) {
+        if (grid[i] === '') {
+            return false;
+        }
+    }
+    return true;
+}
